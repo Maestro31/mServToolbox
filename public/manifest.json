@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "React Content Script",
+  "version": "0.1",
+  "description": "React Content Script",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.maintronic-is.net/MServEvolution/Interventions/*",
+        "https://www.maintronic-is.info/MServEvolution/Interventions/*"
+      ],
+      "exclude_matches": [
+        "https://www.maintronic-is.net/MServEvolution/Interventions/Machine/*",
+        "https://www.maintronic-is.info/MServEvolution/Interventions/Machine/*"
+      ],
+      "js": ["/static/js/intervention.js"],
+      "css": ["/static/css/main.css"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    "images/logo_apple.png",
+    "images/logo_epson.png"
+  ],
+
+  "permissions": [
+    "storage"
+  ]
+}
