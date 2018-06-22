@@ -1,9 +1,9 @@
 import browser from "./browser";
 
 export default class Storage {
-  interventions: [];
-  status: [];
-  codes: [];
+  interventions = [];
+  status = [];
+  codes = [];
 
   load = async () => {
     await browser.storage.local.set({
