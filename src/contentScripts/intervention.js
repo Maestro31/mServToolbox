@@ -87,9 +87,12 @@ class Intervention extends Component {
   onChangeStatus = event => {
     const status = event.target.value;
     this.setState({ currentStatus: status });
+    const numero = document.querySelector("#NumDossier").value;
+    console.log(status);
     if (status !== "") {
-      const numero = document.querySelector("#NumDossier").value;
       this.storage.edit({ numero, status });
+    } else {
+      this.storage.remove(numero);
     }
   };
 
@@ -105,8 +108,11 @@ class Intervention extends Component {
         <TouchableOpacity>
           <img src={`${addonUrl}images/logo_copy.png`} height="30" />
         </TouchableOpacity>
-        <StatusSelect onChange={e => this.onChangeStatus(e)}>
-          <option value={this.state.currentStatus} />
+        <StatusSelect
+          onChange={e => this.onChangeStatus(e)}
+          value={this.state.currentStatus}
+        >
+          <option value="" />
           {this.state.status.map((status, i) => (
             <option key={i} value={status.title}>
               {status.title}

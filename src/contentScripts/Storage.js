@@ -1,9 +1,9 @@
 import browser from "./browser";
 
 export default class Storage {
-  interventions = [];
-  status = {};
-  codes = {};
+  interventions: [];
+  status: [];
+  codes: [];
 
   load = async () => {
     await browser.storage.local.set({
@@ -22,25 +22,28 @@ export default class Storage {
         { title: "Vérification Apple", color: "145757" }
       ]
     });
-    const datas = await browser.storage.local.get([
-      "interventions",
-      "status",
-      "codes"
-    ]);
+    const datas = await browser.storage.local.get({
+      interventions: [],
+      status: [],
+      codes: []
+    });
 
     this.interventions = datas.interventions;
     this.status = datas.status;
     this.codes = datas.codes;
+
+    console.log(datas);
     return datas;
   };
 
   save = () => {
-    browser.storage.local.set(
-      {
+    browser.storage.local
+      .set({
         interventions: this.interventions
-      },
-      null
-    );
+      })
+      .then(() => {
+        console.log("save() : ", this.interventions);
+      });
   };
 
   add = inter => {
@@ -49,12 +52,15 @@ export default class Storage {
   };
 
   edit = inter => {
-    this.remove(inter.numero);
+    console.log("edit: ", inter);
+    this.get(inter.numero);
     this.add(inter);
-    this.save();
   };
 
   get = numInter => {
+    console.log(
+      this.interventions.filter(inter => inter.numero === numInter)[0]
+    );
     return this.interventions.filter(inter => inter.numero === numInter)[0];
   };
 
@@ -62,6 +68,7 @@ export default class Storage {
     this.interventions = this.interventions.filter(
       inter => inter.numero !== numInter
     );
+    console.log("remove() : ", this.interventions);
     this.save();
   };
 }
